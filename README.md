@@ -251,6 +251,7 @@ Being upfront about this is what makes the tool trustworthy. The improvements ar
 ### v0.1.0 (current)
 - [x] Single skill optimisation per run
 - [x] 10-task benchmark suite
+- [x] Live skill invocation — real tool calls, real outputs
 - [x] LLM judge scoring (4 dimensions)
 - [x] Human approval gate — nothing auto-applied
 - [x] Regression testing with live API calls
@@ -258,7 +259,6 @@ Being upfront about this is what makes the tool trustworthy. The improvements ar
 - [x] Works with any model, no Mission Control required
 
 ### v0.2.0 (planned)
-- [ ] Live skill invocation (real outputs, not simulated)
 - [ ] Tool availability pre-flight check
 - [ ] Skill safety auditing (scan for suspicious patterns)
 - [ ] Scheduled overnight runs via cron
