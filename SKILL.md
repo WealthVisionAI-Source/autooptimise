@@ -1,6 +1,8 @@
 ---
 name: autooptimise
-description: Autonomously optimise OpenClaw skill files using a Karpathy-style benchmark-driven experiment loop. The agent runs a skill against a fixed set of test tasks, scores each output using an LLM judge, proposes a targeted modification, re-tests, and keeps or discards the change — iterating up to 3 times per run. Use when asked to "optimise my [skill-name] skill", "run autooptimise on [skill]", "improve my skill overnight", or "benchmark my skill". Designed for overnight autonomous runs with human approval before any changes are applied.
+description: "Autonomously optimise any OpenClaw skill using a benchmark-driven experiment loop. Scores skill outputs 0-10 across 4 dimensions, identifies the lowest-scoring pattern, proposes a targeted SKILL.md change, re-tests, and keeps or discards based on measured improvement. Use when asked to: optimise my [skill] skill, run autooptimise on [skill], benchmark my [skill] skill, improve my skill overnight."
+homepage: https://github.com/WealthVisionAI-Source/autooptimise
+metadata: { "openclaw": { "emoji": "🔬" } }
 ---
 
 # autooptimise
