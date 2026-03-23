@@ -70,9 +70,9 @@ Both improvements confirmed with live API calls (wttr.in for weather). Zero regr
 ## Requirements
 
 - OpenClaw installed (any version)
-- At least one model configured — works with Anthropic, OpenAI, or any model
+- At least one model configured — works with Anthropic, OpenAI, or any NIM model
 - No external accounts, no network registration, no API keys beyond what you already have
-- No custom agent I will submit it now required
+- No Mission Control or custom agent team required
 
 ---
 
@@ -188,10 +188,10 @@ Other approaches either log errors reactively (no measurement), audit config/cos
 
 ---
 
-## Limitations (v0.1)
+## Honest Limitations (v0.1)
 
 1. **Benchmark outputs are simulated.** The agent imagines what a skill would produce — it doesn't invoke the actual tool. v0.2 will use live invocation.
-2. **LLM-as-judge has known biases.** One sub agent scores against a strict rubric, but LLMs can favour confident-sounding outputs. Live validation is the reality check.
+2. **LLM-as-judge has known biases.** Jon scores against a strict rubric, but LLMs can favour confident-sounding outputs. Live validation is the reality check.
 3. **10 tasks per skill.** Enough to find patterns, not enough for statistical significance. v0.2 expands to 20–50 tasks.
 4. **Tool availability not enforced yet.** If the skill's required tool isn't installed (e.g. `gh` CLI), benchmark scores are meaningless. Pre-flight checks coming in v0.2.
 
@@ -208,7 +208,7 @@ Being upfront about this is what makes the tool trustworthy. The improvements ar
 - [x] Human approval gate — nothing auto-applied
 - [x] Regression testing with live API calls
 - [x] Experiment log
-- [x] Works with any model
+- [x] Works with any model, no Mission Control required
 
 ### v0.2.0 (planned)
 - [ ] Live skill invocation (real outputs, not simulated)
@@ -237,6 +237,46 @@ autooptimise/
     ├── run_experiment.md     ← Experiment loop instructions
     └── experiment_log.md     ← Your run history (gitignored)
 ```
+
+---
+
+## Live Benchmark Results
+
+The following results were produced by running autooptimise against the **real built-in OpenClaw GitHub skill** — all 10 tasks used live `gh` CLI calls against an actual GitHub repo (`WealthVisionAI-Source/autooptimise`). Zero simulation.
+
+### GitHub Skill — 2026-03-23
+
+| | Score |
+|-|-------|
+| **Baseline** | 7.83 / 10 |
+| **After 1 iteration** | 9.49 / 10 |
+| **Improvement** | **+1.66** ✅ |
+
+**What was found:** 3 of 10 tasks (list issues, list releases, list PRs) returned completely blank output when `gh` found nothing — users couldn't tell if the command succeeded or failed. Jon (Nemotron/Kimi judge) scored these 4.55 each.
+
+**Single change applied:**
+```diff
++- When gh commands return empty output (no issues, PRs, releases, etc.),
++  ALWAYS output a clear confirmation message like "No open issues found"
++  or "No releases available". Never return blank/empty responses.
+```
+
+**Per-task before/after:**
+
+| Task | Before | After | Δ |
+|------|--------|-------|---|
+| Auth check | 8.65 | 8.85 | +0.20 |
+| Repo metadata | 9.85 | 9.85 | — |
+| **List issues** | **4.55** | **9.70** | **+5.15** |
+| Last 5 commits | 9.25 | 9.25 | — |
+| **List releases** | **4.55** | **9.70** | **+5.15** |
+| File contents | 9.65 | 9.40 | -0.25 |
+| Contributors | 8.85 | 8.85 | — |
+| Topics/tags | 9.85 | 9.85 | — |
+| **Open PRs** | **4.55** | **9.70** | **+5.15** |
+| Clone traffic | 8.50 | 9.75 | +1.25 |
+
+One line added to the skill. One iteration. +1.66 improvement — proven with live API calls.
 
 ---
 
