@@ -70,9 +70,9 @@ Both improvements confirmed with live API calls (wttr.in for weather). Zero regr
 ## Requirements
 
 - OpenClaw installed (any version)
-- At least one model configured — works with Anthropic, OpenAI, or any NIM model
+- At least one model configured — works with Anthropic, OpenAI, or any model
 - No external accounts, no network registration, no API keys beyond what you already have
-- No Mission Control or custom agent team required
+- No custom agent I will submit it now required
 
 ---
 
@@ -188,10 +188,10 @@ Other approaches either log errors reactively (no measurement), audit config/cos
 
 ---
 
-## Honest Limitations (v0.1)
+## Limitations (v0.1)
 
 1. **Benchmark outputs are simulated.** The agent imagines what a skill would produce — it doesn't invoke the actual tool. v0.2 will use live invocation.
-2. **LLM-as-judge has known biases.** Jon scores against a strict rubric, but LLMs can favour confident-sounding outputs. Live validation is the reality check.
+2. **LLM-as-judge has known biases.** One sub agent scores against a strict rubric, but LLMs can favour confident-sounding outputs. Live validation is the reality check.
 3. **10 tasks per skill.** Enough to find patterns, not enough for statistical significance. v0.2 expands to 20–50 tasks.
 4. **Tool availability not enforced yet.** If the skill's required tool isn't installed (e.g. `gh` CLI), benchmark scores are meaningless. Pre-flight checks coming in v0.2.
 
@@ -208,7 +208,7 @@ Being upfront about this is what makes the tool trustworthy. The improvements ar
 - [x] Human approval gate — nothing auto-applied
 - [x] Regression testing with live API calls
 - [x] Experiment log
-- [x] Works with any model, no Mission Control required
+- [x] Works with any model
 
 ### v0.2.0 (planned)
 - [ ] Live skill invocation (real outputs, not simulated)
