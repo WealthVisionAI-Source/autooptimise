@@ -138,22 +138,25 @@ git clone https://github.com/WealthVisionAI-Source/autooptimise \
 
 ## Usage
 
-Just ask your OpenClaw agent in natural language:
+autooptimise works on **any skill already installed on your OpenClaw** — built-in skills, ClawHub installs, or skills you've written yourself. You don't need to configure anything per-skill. Just ask:
 
 ```
 optimise my weather skill
 run autooptimise on the github skill
-benchmark my news skill and suggest improvements
+benchmark my nano-banana-pro skill and suggest improvements
+optimise my news skill
 ```
 
+If the skill exists in your OpenClaw installation, autooptimise will find it and run. That's it.
+
 The agent will:
-1. Confirm which skill to target
-2. Run the benchmark (10 tasks, ~2–5 minutes)
-3. Show you the scores and identify the lowest-scoring pattern
-4. Propose a specific change with a diff
-5. Wait for your approval — **nothing is ever changed without your say-so**
-6. Re-run benchmark and show before/after scores
-7. Run regression tests to confirm no regressions introduced
+1. Locate the target skill's `SKILL.md` automatically
+2. Build a benchmark task suite tailored to that skill's purpose
+3. Run the benchmark — real tool calls where possible (~2–5 minutes)
+4. Show you the scores and identify the lowest-scoring pattern
+5. Propose a specific change with a unified diff
+6. Wait for your approval — **nothing is ever changed without your say-so**
+7. Re-run benchmark with the modified skill and show before/after scores
 8. Log the full run to `runner/experiment_log.md`
 
 ---
