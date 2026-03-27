@@ -72,6 +72,7 @@ Both improvements confirmed with live API calls — wttr.in for weather, real `g
 - OpenClaw installed (any version)
 - At least one model configured — works with Anthropic, OpenAI, or any other model provider supported by OpenClaw
 - No external accounts, no network registration, no API keys beyond what you already have
+- Note: benchmark runs execute live tool calls on the target skill — network activity depends on which skill you're optimising
 - No Mission Control or custom agent team required (though multi-agent mode improves score reliability — see below)
 
 ---
@@ -208,7 +209,9 @@ The benchmark alone tells you scores went up. But did the skill actually get bet
 
 ## Safety
 
-**No external dependencies.** autooptimise makes no network calls beyond your existing OpenClaw model provider. No registration, no telemetry, no external APIs.
+**Network calls.** autooptimise makes no registration, telemetry, or external API calls of its own. However, the benchmark loop intentionally runs **live tool calls** when testing skills — so if a skill uses external APIs (e.g. `wttr.in` for weather, `gh` CLI for GitHub), those calls will fire during benchmarking. This is by design: real outputs produce meaningful scores. If you need offline-only behaviour, do not run autooptimise on skills that make network calls.
+
+**Filesystem access.** autooptimise reads the target skill's `SKILL.md` file and, after your explicit approval, writes the approved diff back to that file. It also writes to `runner/experiment_log.md` to log run history. No other files are read or written.
 
 **No auto-apply.** Every proposed change requires explicit approval. The agent shows you the exact diff and waits. You can reject, modify, or ask for an alternative.
 
@@ -227,7 +230,7 @@ There are other self-improvement skills on ClawHub. Here's how autooptimise comp
 | Benchmark scoring (0–10) | ❌ | ✅ |
 | Skill-specific optimisation | ❌ | ✅ |
 | Agent separation (no self-marking) | ❌ | ✅ |
-| No external network required | ❌ some | ✅ |
+| No telemetry or hidden network calls | ❌ some | ✅ |
 | Measurable before/after | ❌ | ✅ |
 | Regression testing | ❌ | ✅ |
 | Human approval gate | ❌ some | ✅ always |
